@@ -95,6 +95,10 @@ PRODUCT_PACKAGES += \
     libshim_camera \
     libstlport
 
+# BoringSSL hacks
+PRODUCT_PACKAGES += \
+    libboringssl-compat
+
 # Connectivity
 PRODUCT_PACKAGES += \
     libcnefeatureconfig
