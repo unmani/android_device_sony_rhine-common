@@ -136,9 +136,6 @@ PRODUCT_PACKAGES += \
     libqsap_sdk \
     wcnss_service
 
-PRODUCT_PROPERTY_OVERRIDES += \
-    wlan.driver.ath=0
-
 PRODUCT_COPY_FILES += \
     $(COMMON_PATH)/rootdir/system/etc/wifi/wpa_supplicant_overlay.conf:system/etc/wifi/wpa_supplicant_overlay.conf \
     $(COMMON_PATH)/rootdir/system/etc/wifi/p2p_supplicant_overlay.conf:system/etc/wifi/p2p_supplicant_overlay.conf
@@ -149,70 +146,6 @@ PRODUCT_COPY_FILES += \
     $(COMMON_PATH)/rootdir/system/etc/firmware/wlan/prima/WCNSS_qcom_cfg.ini:system/etc/firmware/wlan/prima/WCNSS_qcom_cfg.ini \
     $(COMMON_PATH)/rootdir/system/etc/firmware/wlan/prima/WCNSS_qcom_wlan_nv.bin:system/etc/firmware/wlan/prima/WCNSS_qcom_wlan_nv.bin \
     $(COMMON_PATH)/rootdir/system/etc/hostapd/hostapd_default.conf:system/etc/hostapd/hostapd_default.conf
-
-# Audio offload
-PRODUCT_PROPERTY_OVERRIDES += \
-    audio.offload.buffer.size.kb=32 \
-    audio.offload.gapless.enabled=false \
-    audio.offload.multiple.enabled=false \
-    audio.offload.pcm.enable=enable \
-    av.offload.enable=enable \
-    av.streaming.offload.enable=enable
-
-# Enable AAC 5.1 output
-PRODUCT_PROPERTY_OVERRIDES += \
-    media.aac_51_output_enabled=true
-
-# Voice Call
-PRODUCT_PROPERTY_OVERRIDES += \
-    ro.qc.sdk.audio.fluencetype=none \
-    persist.audio.dualmic.config=endfire \
-    persist.audio.fluence.voicecall=true \
-    persist.audio.fluence.voicerec=false \
-    persist.audio.fluence.speaker=true
-
-# aDSP
-PRODUCT_PROPERTY_OVERRIDES += \
-    ro.qualcomm.sensors.qmd=true \
-    debug.qualcomm.sns.hal=w \
-    ro.qc.sdk.sensors.gestures=false \
-    ro.qc.sensors.max_accel_rate=false \
-    ro.qc.sensors.max_gyro_rate=false \
-    ro.qc.sensors.max_mag_rate=false \
-    ro.qc.sensors.smgr_mag_cal_en=true \
-    ro.qualcomm.sensors.pedometer=false \
-    ro.qc.sensors.step_counter=true \
-    ro.qc.sensors.step_detector=true \
-    ro.qualcomm.sensors.pam=false \
-    ro.qualcomm.sensors.scrn_ortn=false \
-    ro.qualcomm.sensors.georv=true \
-    ro.qualcomm.sensors.smd=sony
-
-# Bluetooth
-PRODUCT_PROPERTY_OVERRIDES += \
-    ro.qualcomm.bt.hci_transport=smd \
-    ro.bt.bdaddr_path=/data/etc/bluetooth_bdaddr
-
-# HDMI
-PRODUCT_PROPERTY_OVERRIDES += \
-    persist.demo.hdmirotationlock=false
-
-# MDP
-PRODUCT_PROPERTY_OVERRIDES += \
-    debug.mdpcomp.logs=0
-
-# Time
-PRODUCT_PROPERTY_OVERRIDES += \
-    persist.timed.enable=true
-
-# Touchscreen
-PRODUCT_PROPERTY_OVERRIDES += \
-    ro.input.noresample=1
-
-# WFD
-PRODUCT_PROPERTY_OVERRIDES += \
-    persist.debug.wfd.enable=1 \
-    persist.sys.wfd.virtual=0
 
 # HWUI memory limits
 $(call inherit-product, frameworks/native/build/phone-xxhdpi-2048-hwui-memory.mk)
