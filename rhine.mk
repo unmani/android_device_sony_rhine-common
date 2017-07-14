@@ -68,6 +68,17 @@ PRODUCT_COPY_FILES += \
 PRODUCT_PACKAGES += \
     e2fsck
 
+# GPS
+PRODUCT_PACKAGES += \
+    libloc_core \
+    libloc_eng \
+    libgps.utils \
+    libloc_ds_api \
+    libloc_api_v02
+
+PRODUCT_COPY_FILES += \
+    $(COMMON_PATH)/gps/etc/gps.conf:system/etc/gps.conf
+
 PRODUCT_PACKAGES += \
     qcom.fmradio \
     libqcomfm_jni \
