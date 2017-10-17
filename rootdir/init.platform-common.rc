@@ -69,11 +69,6 @@ service hw_config /system/bin/sh /system/etc/hw_config.sh
     user root
     oneshot
 
-service irsc_util /system/bin/irsc_util "/etc/sec_config"
-    class main
-    user root
-    oneshot
-
 service wcnss-service /system/bin/wcnss_service
     class late_start
     user system
