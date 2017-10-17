@@ -51,7 +51,8 @@ PRODUCT_COPY_FILES += \
 
 # Sbin
 PRODUCT_COPY_FILES += \
-    $(COMMON_PATH)/rootdir/sbin/tad_static:system/bin/tad_static
+    $(COMMON_PATH)/rootdir/sbin/tad_static:system/bin/tad_static \
+    $(COMMON_PATH)/rootdir/sbin/wait4tad_static:system/bin/wait4tad_static
 
 # ANT+
 PRODUCT_PACKAGES += \
