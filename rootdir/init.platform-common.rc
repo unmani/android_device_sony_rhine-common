@@ -1,0 +1,101 @@
+#
+# Copyright 2012 The Android Open Source Project
+# Copyright (C) 2013 The CyanogenMod Project
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#      http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+#
+
+on early-boot
+    exec /system/bin/sh /system/etc/init.qcom.wifi.sh
+
+on boot
+    exec /system/bin/btnvtool -O
+    chown bluetooth bluetooth /sys/module/bluetooth_power/parameters/power
+    chown bluetooth bluetooth /sys/class/rfkill/rfkill0/type
+    chown bluetooth bluetooth /sys/class/rfkill/rfkill0/state
+    chown bluetooth bluetooth /proc/bluetooth/sleep/proto
+    chown bluetooth bluetooth /sys/module/hci_uart/parameters/ath_lpm
+    chown bluetooth bluetooth /sys/module/hci_uart/parameters/ath_btwrite
+    chown system system /sys/module/sco/parameters/disable_esco
+    chown bluetooth bluetooth /sys/module/hci_smd/parameters/hcismd_set
+    chmod 0660 /sys/module/bluetooth_power/parameters/power
+    chmod 0660 /sys/module/hci_smd/parameters/hcismd_set
+    chmod 0660 /sys/class/rfkill/rfkill0/state
+    chmod 0660 /proc/bluetooth/sleep/proto
+    chown bluetooth bluetooth /dev/ttyHS0
+    chmod 0660 /sys/module/hci_uart/parameters/ath_lpm
+    chmod 0660 /sys/module/hci_uart/parameters/ath_btwrite
+    chmod 0660 /dev/ttyHS0
+    chown bluetooth bluetooth /sys/devices/platform/msm_serial_hs.0/clock
+    chmod 0660 /sys/devices/platform/msm_serial_hs.0/clock
+
+    chmod 0660 /dev/ttyHS2
+    chown bluetooth bluetooth /dev/ttyHS2
+
+    # Remove SUID bit for iproute2 ip tool
+    chmod 0755 /system/bin/ip
+
+    # BT DUN port-bridge
+    chmod 0660 /dev/smd7
+    chown bluetooth bluetooth /dev/smd7
+
+    chown root system /proc/net/ip_conntrack
+
+
+service hciattach /system/bin/sh /system/etc/init.qcom.bt.sh
+    class late_start
+    user bluetooth
+    group qcom_oncrpc bluetooth net_bt_admin system
+    disabled
+    oneshot
+
+on property:bluetooth.hciattach=true
+    start hciattach
+
+on property:bluetooth.hciattach=false
+    setprop bluetooth.status off
+
+# Wi-Fi and BT MAC addresses
+service macaddrsetup /system/bin/macaddrsetup /sys/devices/fb000000.qcom,wcnss-wlan/wcnss_mac_addr
+    class late_start
+    user root
+    oneshot
+
+service hw_config /system/bin/sh /system/etc/hw_config.sh
+    class main
+    user root
+    oneshot
+
+service fm_dl /system/bin/sh /system/etc/init.qcom.fm.sh
+    user root
+    group system
+    disabled
+    oneshot
+
+service irsc_util /system/bin/irsc_util "/etc/sec_config"
+    class main
+    user root
+    oneshot
+
+service wcnss-service /system/bin/wcnss_service
+    class late_start
+    user system
+    group system wifi
+    disabled
+    oneshot
+
+service ptt_socket_app /system/bin/ptt_socket_app
+    class main
+    user system
+    group system
+    oneshot
