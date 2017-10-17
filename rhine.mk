@@ -46,6 +46,10 @@ PRODUCT_COPY_FILES += \
     $(COMMON_PATH)/rootdir/init.qcom.power.rc:root/init.qcom.power.rc \
     $(COMMON_PATH)/rootdir/ueventd.qcom.rc:root/ueventd.qcom.rc
 
+# Recovery Init
+PRODUCT_COPY_FILES += \
+    $(COMMON_PATH)/rootdir/init.qcom.power.rc:root/init.recovery.qcom.rc
+
 PRODUCT_COPY_FILES += \
     $(LOCAL_PATH)/recovery/c6x02.sh:c6x02.sh
 
