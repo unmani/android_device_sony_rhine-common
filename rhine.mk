@@ -43,6 +43,7 @@ PRODUCT_COPY_FILES += \
 PRODUCT_COPY_FILES += \
     $(COMMON_PATH)/rootdir/init.platform-common.rc:root/init.platform-common.rc \
     $(COMMON_PATH)/rootdir/init.shims.rc:root/init.shims.rc \
+    $(COMMON_PATH)/rootdir/init.sony.rc:root/init.sony.rc \
     $(COMMON_PATH)/rootdir/init.qcom.power.rc:root/init.qcom.power.rc \
     $(COMMON_PATH)/rootdir/ueventd.qcom.rc:root/ueventd.qcom.rc
 
@@ -55,8 +56,8 @@ PRODUCT_COPY_FILES += \
 
 # Sbin
 PRODUCT_COPY_FILES += \
-    $(COMMON_PATH)/rootdir/sbin/tad_static:system/bin/tad_static \
-    $(COMMON_PATH)/rootdir/sbin/wait4tad_static:system/bin/wait4tad_static
+    $(COMMON_PATH)/rootdir/sbin/tad_static:root/sbin/tad_static \
+    $(COMMON_PATH)/rootdir/sbin/wait4tad_static:root/sbin/wait4tad_static
 
 # ANT+
 PRODUCT_PACKAGES += \
@@ -66,7 +67,14 @@ PRODUCT_PACKAGES += \
 
 # Audio configuration
 PRODUCT_COPY_FILES += \
-    $(LOCAL_PATH)/audio/audio_policy.conf:system/etc/audio_policy.conf
+    $(LOCAL_PATH)/audio/audio_policy_configuration.xml:system/etc/audio_policy_configuration.xml
+
+PRODUCT_COPY_FILES += \
+frameworks/av/services/audiopolicy/config/a2dp_audio_policy_configuration.xml:system/etc/a2dp_audio_policy_configuration.xml \
+frameworks/av/services/audiopolicy/config/audio_policy_volumes.xml:/system/etc/audio_policy_volumes.xml \
+frameworks/av/services/audiopolicy/config/default_volume_tables.xml:system/etc/default_volume_tables.xml \
+frameworks/av/services/audiopolicy/config/r_submix_audio_policy_configuration.xml:system/etc/r_submix_audio_policy_configuration.xml \
+frameworks/av/services/audiopolicy/config/usb_audio_policy_configuration.xml:system/etc/usb_audio_policy_configuration.xm
 
 # Filesystem management tools
 PRODUCT_PACKAGES += \
@@ -96,8 +104,8 @@ PRODUCT_PACKAGES += \
     libstlport
 
 # BoringSSL hacks
-PRODUCT_PACKAGES += \
-    libboringssl-compat
+#PRODUCT_PACKAGES += \
+#    libboringssl-compat
 
 # Connectivity
 PRODUCT_PACKAGES += \
