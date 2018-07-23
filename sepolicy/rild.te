@@ -1,1 +1,0 @@
-allow rild ta_prop:file { read open };

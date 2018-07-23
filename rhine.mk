@@ -103,9 +103,25 @@ PRODUCT_PACKAGES += \
     libshim_camera \
     libstlport
 
-# BoringSSL hacks
-#PRODUCT_PACKAGES += \
-#    libboringssl-compat
+# Connectivity
+PRODUCT_PACKAGES += \
+    libcnefeatureconfig
+
+# Init
+PRODUCT_COPY_FILES += \
+    $(COMMON_PATH)/rootdir/init.msm8974-common.rc:root/init.msm8974-common.rc \
+    $(COMMON_PATH)/rootdir/init.sony.usb.rc:root/init.sony.usb.rc \
+    $(COMMON_PATH)/rootdir/fstab.qcom:root/fstab.qcom \
+    $(COMMON_PATH)/rootdir/init.qcom.rc:root/init.qcom.rc \
+    $(COMMON_PATH)/rootdir/init.camera.rc:root/init.camera.rc \
+    $(COMMON_PATH)/rootdir/init.sony.rc:root/init.sony.rc \
+    $(COMMON_PATH)/rootdir/init.qcom.power.rc:root/init.qcom.power.rc \
+    $(COMMON_PATH)/rootdir/ueventd.qcom.rc:root/ueventd.qcom.rc
+
+
+PRODUCT_COPY_FILES += \
+    $(COMMON_PATH)/rootdir/system/vendor/bin/credmgrfirstboot.sh:$(TARGET_COPY_OUT_VENDOR)/bin/credmgrfirstboot.sh
+
 
 # Connectivity
 PRODUCT_PACKAGES += \
@@ -180,7 +196,7 @@ PRODUCT_COPY_FILES += \
     $(COMMON_PATH)/media_codecs_performance.xml:system/etc/media_codecs_performance.xml
 
 # HWUI memory limits
-$(call inherit-product, frameworks/native/build/phone-xxhdpi-2048-hwui-memory.mk)
+#$(call inherit-product, frameworks/native/build/phone-xxhdpi-2048-hwui-memory.mk)
 
 # Include non-opensource parts
 $(call inherit-product, vendor/sony/rhine-common/rhine-common-vendor.mk)

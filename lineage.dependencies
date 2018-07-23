@@ -8,11 +8,28 @@
     "target_path": "device/sony/msm8974-common"
   },
   {
+    "repository": "android_device_qcom_common",
+    "target_path": "device/qcom/common"
+  },
+  {
     "repository": "android_hardware_qcom_fm",
     "target_path": "hardware/qcom/fm"
   },
   {
     "repository": "android_external_sony_boringssl-compat",
     "target_path": "external/sony/boringssl-compat"
+  },
+  {
+    "repository": "android_hardware_sony_macaddrsetup",
+    "target_path": "hardware/sony/macaddrsetup"
+  }
+  {
+    "repository": "android_hardware_sony_thermanager",
+    "target_path": "hardware/sony/thermanager"
+  }
+  {
+    "repository": "android_hardware_sony_timekeep",
+    "target_path": "hardware/sony/timekeep"
   }
 ]
+
