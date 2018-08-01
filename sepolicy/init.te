@@ -1,1 +1,3 @@
-allow init blkid_exec:file getattr;
+#============= init ==============
+allow init wcnss_device:chr_file write;
+allow init wcnss_device:chr_file write;

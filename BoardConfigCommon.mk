@@ -19,17 +19,22 @@ TARGET_SPECIFIC_HEADER_PATH += device/sony/rhine-common/include
 
 # Platform
 BOARD_VENDOR_PLATFORM := rhine
-PRODUCT_PLATFORM:= rhine
+PRODUCT_PLATFORM := rhine
 
 # Kernel information
+BOARD_KERNEL_IMAGE_NAME := zImage
 BOARD_KERNEL_BASE     := 0x00000000
 BOARD_KERNEL_PAGESIZE := 2048
 BOARD_KERNEL_CMDLINE  := androidboot.hardware=qcom user_debug=31 msm_rtb.filter=0x3b7 ehci-hcd.park=3 androidboot.bootdevice=msm_sdcc.1 vmalloc=300M dwc3.maximum_speed=high dwc3_msm.prop_chg_detect=Y
+#BOARD_KERNEL_CMDLINE  += androidboot.selinux=permissive
 BOARD_MKBOOTIMG_ARGS  := --ramdisk_offset 0x02000000 --tags_offset 0x01E00000
 BOARD_KERNEL_SEPARATED_DT := true
 
 # ANT+
-BOARD_ANT_WIRELESS_DEVICE := "vfs-prerelease"
+BOARD_ANT_WIRELESS_DEVICE := "qualcomm-smd"
+
+# Audio
+USE_LEGACY_LOCAL_AUDIO_HAL := true
 
 # Bluetooth
 BOARD_HAVE_BLUETOOTH := true
@@ -37,7 +42,7 @@ BOARD_HAVE_BLUETOOTH_QCOM := true
 BLUETOOTH_HCI_USE_MCT := true
 
 # CM Hardware
-BOARD_HARDWARE_CLASS += device/sony/rhine-common/cmhw
+BOARD_HARDWARE_CLASS += device/sony/rhine-common/lineagehw
 
 # Dumpstate
 BOARD_LIB_DUMPSTATE := libdumpstate.sony
@@ -47,29 +52,28 @@ AUDIO_FEATURE_ENABLED_FM := true
 BOARD_HAVE_QCOM_FM := true
 TARGET_QCOM_NO_FM_FIRMWARE := true
 
-# Audio
-BOARD_USES_ALSA_AUDIO := true
-USE_XML_AUDIO_POLICY_CONF := 1
-USE_CUSTOM_AUDIO_POLICY := 1
-AUDIO_FEATURE_DISABLED_USBAUDIO := true
-AUDIO_FEATURE_LOW_LATENCY_PRIMARY := true
-AUDIO_FEATURE_ENABLED_PROXY_DEVICE := true
-AUDIO_FEATURE_ENABLED_EXTN_FORMATS := true
-AUDIO_FEATURE_ENABLED_EXTN_POST_PROC := true
-AUDIO_FEATURE_ENABLED_LOW_LATENCY_CAPTURE := true
-AUDIO_FEATURE_ENABLED_FM_POWER_OPT := true
-
-# GPS definitions for Qualcomm solution
-BOARD_VENDOR_QCOM_GPS_LOC_API_HARDWARE := $(TARGET_BOARD_PLATFORM)
-BOARD_VENDOR_QCOM_LOC_PDK_FEATURE_SET := true
-TARGET_NO_RPC := true
-
 # Init
 TARGET_INIT_VENDOR_LIB := libinit_rhine
 
 # SELinux
 BOARD_SEPOLICY_DIRS += \
     device/sony/rhine-common/sepolicy
+
+# Shims
+TARGET_LD_SHIM_LIBS := \
+	/system/vendor/bin/credmgrd|/system/vendor/lib/libshims_signal.so \
+	/system/vendor/bin/iddd|/system/vendor/lib/libshims_idd.so \
+	/system/vendor/bin/suntrold|/system/vendor/lib/libshims_signal.so \
+	/system/lib/hw/camera.vendor.qcom.so|/system/vendor/lib/libsonycamera.so \
+	/system/lib/hw/camera.vendor.qcom.so|/system/vendor/lib/libshim_camera.so \
+	/system/lib/hw/camera.vendor.qcom.so|/system/vendor/lib/libshim_cald.so \
+	/system/lib/hw/camera.vendor.qcom.so|libsensor.so \
+	/system/lib/libcald_pal.so|/system/vendor/lib/libshim_cald.so \
+	/system/lib/libcammw.so|/system/vendor/lib/libshim_cald.so \
+	/system/lib/libcammw.so|libsensor.so \
+	/system/lib/libsomc_chokoballpal.so|/system/vendor/lib/libshim_camera.so \
+	/system/vendor/bin/mm-qcamera-daemon|/system/vendor/lib/libc_util.so \
+	/system/vendor/bin/mm-qcamera-daemon|libandroid.so
 
 # Platform props
 TARGET_SYSTEM_PROP += device/sony/rhine-common/system.prop
@@ -85,12 +89,16 @@ BOARD_HOSTAPD_PRIVATE_LIB        := lib_driver_cmd_$(BOARD_WLAN_DEVICE)
 WIFI_DRIVER_FW_PATH_STA          := "sta"
 WIFI_DRIVER_FW_PATH_AP           := "ap"
 
+# RIL
+BOARD_PROVIDES_LIBRIL := true
+
 # Filesystem
 BOARD_FLASH_BLOCK_SIZE := 131072
 TARGET_USERIMAGES_USE_EXT4 := true
 TARGET_USERIMAGES_USE_F2FS := true
 
 # Recovery
+TARGET_RECOVERY_FSTAB := device/sony/rhine-common/rootdir/fstab.full
 TARGET_RECOVERY_PIXEL_FORMAT := "RGBX_8888"
 BOARD_HAS_NO_SELECT_BUTTON := true
 BOARD_USE_CUSTOM_RECOVERY_FONT := \"roboto_23x41.h\"
